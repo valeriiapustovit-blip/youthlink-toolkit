@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouthLink · Аналітична сторінка дослідження</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@400;450;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f3ef;
+  --page:#ffffff;
+  --text:#1a1a1a;
+  --muted:#6b6860;
+  --border:#e8e5df;
+  --ua:#005BBB;
+  --eu:#003399;
+  --accent:#E6B400;
+  --green:#1a7a4a;
+  --green-bg:#edf7f1;
+  --blue-bg:#eef4fb;
+  --amber-bg:#fdf8ea;
+  --red:#c0392b;
+  --red-bg:#fdf0ee;
+  --purple:#5b3fa0;
+  --purple-bg:#f0ebfa;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+
+/* ── NAV ── */
+.topnav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.3px;padding:14px 0;margin-right:32px;color:var(--text)}
+.nav-logo span{color:var(--ua)}
+.nav-tabs{display:flex;gap:2px;flex:1;overflow-x:auto}
+.nav-tab{padding:14px 14px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--text);border-bottom-color:var(--text)}
+.nav-lang{font-size:12px;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:4px;cursor:pointer;white-space:nowrap}
+
+/* ── SECTIONS ── */
+.section{display:none;max-width:860px;margin:0 auto;padding:40px 24px 80px}
+.section.active{display:block}
+
+/* ── HERO ── */
+.hero{background:var(--text);color:#fff;border-radius:12px;padding:48px 40px;margin-bottom:32px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:240px;height:240px;background:var(--ua);opacity:.15;border-radius:50%}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.hero h1{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1.15;margin-bottom:14px}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.7);max-width:520px;line-height:1.7}
+.hero-flags{display:flex;gap:8px;margin-top:20px;font-size:22px}
+
+/* ── SECTION HEADER ── */
+.sec-header{margin-bottom:28px}
+.sec-eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.sec-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;line-height:1.2}
+.sec-desc{font-size:14px;color:var(--muted);margin-top:8px;max-width:600px}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:all .15s}
+.card:hover{border-color:#aaa;transform:translateY(-1px)}
+.card-icon{font-size:24px;margin-bottom:10px}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.card-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 8px;border-radius:3px;margin-top:10px}
+.tag-ua{background:var(--blue-bg);color:var(--ua)}
+.tag-eu{background:#eef0fb;color:var(--eu)}
+.tag-both{background:var(--amber-bg);color:#8a6200}
+.tag-oms{background:var(--green-bg);color:var(--green)}
+.tag-youth{background:var(--purple-bg);color:var(--purple)}
+
+/* ── CASE STUDY ── */
+.case{background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px}
+.case-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.case-num{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--muted)}
+.case-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:4px}
+.case-loc{font-size:13px;color:var(--muted)}
+.case-flag{font-size:24px}
+.case-body{font-size:14px;color:#333;line-height:1.65;margin-bottom:14px}
+.case-meta{display:flex;gap:8px;flex-wrap:wrap}
+.case-pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--bg)}
+.case-divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+.case-what{font-size:13px;margin-top:10px}
+.case-what strong{display:block;font-weight:600;margin-bottom:4px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── ACCORDION ── */
+.accordion{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px;background:#fff}
+.acc-head{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:14px}
+.acc-head:hover{background:var(--bg)}
+.acc-arrow{font-size:12px;color:var(--muted);transition:transform .2s}
+.acc-body{padding:0 20px 16px;font-size:14px;color:#333;line-height:1.65;display:none}
+.accordion.open .acc-body{display:block}
+.accordion.open .acc-arrow{transform:rotate(180deg)}
+
+/* ── PROFILE CARDS ── */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.profile{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px}
+.profile-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.profile-icon{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.profile-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
+.profile-sub{font-size:12px;color:var(--muted)}
+.profile-list{list-style:none}
+.profile-list li{font-size:13px;color:#333;padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:8px}
+.profile-list li:last-child{border:none}
+.profile-list li::before{content:"→";color:var(--muted);flex-shrink:0}
+
+/* ── FLOW STEPS ── */
+.flow{display:flex;flex-direction:column;gap:0;margin-bottom:28px}
+.flow-step{display:flex;gap:16px;align-items:flex-start}
+.flow-line{display:flex;flex-direction:column;align-items:center;gap:0}
+.flow-dot{width:32px;height:32px;border-radius:50%;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;flex-shrink:0}
+.flow-connector{width:2px;background:var(--border);flex:1;min-height:24px}
+.flow-content{padding-bottom:24px;flex:1}
+.flow-step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.flow-step-body{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ── QUOTE ── */
+.quote{border-left:3px solid var(--accent);padding:12px 16px;margin:14px 0;background:var(--amber-bg);border-radius:0 8px 8px 0}
+.quote p{font-size:14px;font-style:italic;line-height:1.65}
+.quote-src{font-size:12px;color:var(--muted);margin-top:6px}
+
+/* ── STAT ROW ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center}
+.stat-n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800}
+.stat-l{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.tbl th{background:var(--bg);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+.tbl td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl tr:last-child td{border:none}
+.tbl tr:hover td{background:#fafaf8}
+
+/* ── BANNER ── */
+.banner{border-radius:10px;padding:20px 24px;margin-bottom:20px;display:flex;gap:14px;align-items:flex-start}
+.banner-info{background:var(--blue-bg);border:1px solid #b8d4ef}
+.banner-tip{background:var(--amber-bg);border:1px solid #e8d080}
+.banner-success{background:var(--green-bg);border:1px solid #a0d8b8}
+.banner-warn{background:var(--red-bg);border:1px solid #f0b8b0}
+.banner-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.banner-body{font-size:13px;line-height:1.6}
+.banner-body strong{font-weight:600;display:block;margin-bottom:2px}
+
+/* ── COMPARE BAR ── */
+.compare-row{display:flex;gap:10px;align-items:center;margin-bottom:10px;font-size:13px}
+.compare-label{width:220px;flex-shrink:0;color:var(--text)}
+.compare-bars{flex:1;display:flex;gap:6px;align-items:center}
+.bar-wrap{flex:1}
+.bar{height:8px;border-radius:4px;transition:width .4s}
+.bar-ua{background:var(--ua)}
+.bar-eu{background:var(--eu)}
+.bar-val{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
+
+/* ── LANG TOGGLE ── */
+.lang-section{display:none}
+.lang-section.active{display:block}
+
+/* ── SECTION SUB-LABEL ── */
+.sub-label{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:24px 0 12px}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="nav-logo">Youth<span>Link</span></div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showTab('summary')">📋 Огляд</div>
+    <div class="nav-tab" onclick="showTab('about')">🔍 Дослідження</div>
+    <div class="nav-tab" onclick="showTab('oms')">🗺️ Громади</div>
+    <div class="nav-tab" onclick="showTab('youth')">👥 Молодь</div>
+    <div class="nav-tab" onclick="showTab('ternivska')">🔬 Кейс</div>
+    <div class="nav-tab" onclick="showTab('findings')">🔄 Висновки</div>
+    <div class="nav-tab" onclick="showTab('recs')">📌 Рекомендації</div>
+    <div class="nav-tab" onclick="showTab('team')">👤 Команда</div>
+  </div>
+  <div class="nav-lang" onclick="toggleLang()" id="lang-btn">УКР / ENG</div>
+</div>
+
+<!-- ═══════════ SUMMARY ═══════════ -->
+<div class="section active" id="tab-summary">
+
+  <!-- UA -->
+  <div class="lang-section active" id="summary-ua">
+    <div class="hero">
+      <div class="hero-eyebrow">YouthLink · Bridge EU–UA Lab · Аналітична сторінка дослідження</div>
+      <h1>Периферія має голос.<br>Ми його зібрали.</h1>
+      <div class="hero-sub">Синтез кількісних опитувань та якісних інтерв'ю з ОМС і молоддю малих і середніх громад України та ЄС. Лютий — травень 2026.</div>
+      <div class="hero-flags">🇺🇦 ↔ 🇪🇺</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-n" style="color:var(--ua)">5</div><div class="stat-l">Джерел даних</div></div>
+      <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Респондентів</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--eu)">7</div><div class="stat-l">Країн ЄС</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--accent)">3</div><div class="stat-l">Громади ОМС</div></div>
+    </div>
+
+    <div class="sec-header">
+      <div class="sec-eyebrow">Executive Summary</div>
+      <div class="sec-title">Головні висновки</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" onclick="showTab('youth')">
+        <div class="card-icon">📉</div>
+        <div class="card-title">Вплив молоді — низький</div>
+        <div class="card-desc">Молодь оцінює свій вплив на рішення 3,2/5 (UA) і 2,8/5 (EU). Голос є — але не чутний.</div>
+        <span class="card-tag tag-both">УКР + ЄС</span>
+      </div>
+      <div class="card" onclick="showTab('youth')">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">Спільні потреби</div>
+        <div class="card-desc">Психологічна підтримка, простори для розвитку, економічні можливості — однаково актуальні в обох контекстах.</div>
+        <span class="card-tag tag-both">УКР + ЄС</span>
+      </div>
+      <div class="card" onclick="showTab('oms')">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Фінансування — залишкове</div>
+        <div class="card-desc">ОМС малих громад залежать від грантів. Молодіжна політика — не пріоритет бюджету.</div>
+        <span class="card-tag tag-oms">Для ОМС</span>
+      </div>
+      <div class="card" onclick="showTab('findings')">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Реверсний обмін</div>
+        <div class="card-desc">Україна має унікальний досвід стійкості — якого в стабільній Європі немає. Peer-to-peer = рівноправний обмін.</div>
+        <span class="card-tag tag-youth">Молодь + ОМС</span>
+      </div>
+    </div>
+
+    <div class="banner banner-info">
+      <div class="banner-icon">🗂️</div>
+      <div class="banner-body"><strong>Як орієнтуватися у документі</strong>ОМС — починайте з розділу «Громади». Молодіжні організації — з «Молодь» та «Кейс». Всім — «Висновки» і «Рекомендації».</div>
+    </div>
+  </div>
+
+  <!-- EN -->
+  <div class="lang-section" id="summary-en">
+    <div class="hero">
+      <div class="hero-eyebrow">YouthLink · Bridge EU–UA Lab · Research Report</div>
+      <h1>Periphery has a voice.<br>We collected it.</h1>
+      <div class="hero-sub">Synthesis of quantitative surveys and qualitative interviews with LSGBs and youth from small and medium communities in Ukraine and the EU. February – May 2026.</div>
+      <div class="hero-flags">🇺🇦 ↔ 🇪🇺</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-n" style="color:var(--ua)">5</div><div class="stat-l">Data sources</div></div>
+      <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Respondents</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--eu)">7</div><div class="stat-l">EU countries</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--accent)">3</div><div class="stat-l">LSGB communities</div></div>
+    </div>
+
+    <div class="sec-header">
+      <div class="sec-eyebrow">Executive Summary</div>
+      <div class="sec-title">Key Findings</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" onclick="showTab('youth')">
+        <div class="card-icon">📉</div>
+        <div class="card-title">Youth influence is low</div>
+        <div class="card-desc">Youth rate their influence on decisions at 3.2/5 (UA) and 2.8/5 (EU). The voice exists — but isn't heard.</div>
+        <span class="card-tag tag-both">UA + EU</span>
+      </div>
+      <div class="card" onclick="showTab('youth')">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">Shared needs</div>
+        <div class="card-desc">Psychological support, development spaces, economic opportunities — equally relevant in both contexts.</div>
+        <span class="card-tag tag-both">UA + EU</span>
+      </div>
+      <div class="card" onclick="showTab('oms')">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Funding is residual</div>
+        <div class="card-desc">Small community LSGBs rely on grants. Youth policy is not a budget priority.</div>
+        <span class="card-tag tag-oms">LSGBs</span>
+      </div>
+      <div class="card" onclick="showTab('findings')">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Reverse exchange</div>
+        <div class="card-desc">Ukraine has a unique resilience experience that stable Europe doesn't have. Peer-to-peer = equal exchange.</div>
+        <span class="card-tag tag-youth">Youth + LSGBs</span>
+      </div>
+    </div>
+
+    <div class="banner banner-info">
+      <div class="banner-icon">🗂️</div>
+      <div class="banner-body"><strong>How to navigate this document</strong>LSGBs — start with "Communities". Youth orgs — "Youth" and "Case Study". Everyone — "Findings" and "Recommendations".</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<div class="section" id="tab-about">
+  <div class="lang-section active" id="about-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Методологія · Джерела</div>
+      <div class="sec-title">Про дослідження</div>
+      <div class="sec-desc">Як збирались дані, хто був залучений і чому цей підхід дозволяє порівнювати UA та EU.</div>
+    </div>
+
+    <div class="sub-label">Мета</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Навіщо це дослідження?</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        Дослідити стан молодіжної політики та молодіжної роботи у малих і середніх громадах України та ЄС, виявити спільні виклики й точки для взаємного обміну досвідом у форматі peer-to-peer. Результати лягли в основу аналітичної довідки та цього цифрового toolkit-у.
+      </div>
+    </div>
+
+    <div class="sub-label">Методи та джерела</div>
+    <table class="tbl">
+      <tr><th>Джерело</th><th>Тип</th><th>Охоплення</th></tr>
+      <tr><td><strong>Опитування ОМС (UA)</strong></td><td>Кількісне</td><td>3 громади: Тернівська, Олександрійська, Кушугумська</td></tr>
+      <tr><td><strong>Опитування молоді та ОГС (UA)</strong></td><td>Кількісне</td><td>30+ респондентів, 7 громад</td></tr>
+      <tr><td><strong>Опитування молоді (EU)</strong></td><td>Кількісне</td><td>16 респондентів, 7 країн</td></tr>
+      <tr><td><strong>Глибинне інтерв'ю (UA)</strong></td><td>Якісне</td><td>Тернівська громада, 2 фахівці молодіжного центру</td></tr>
+      <tr><td><strong>Проєктна документація</strong></td><td>Контекстний</td><td>SMART-цілі, план дій, індикатори</td></tr>
+    </table>
+
+    <div class="sub-label">Географічне охоплення</div>
+    <div class="profile-grid">
+      <div class="profile">
+        <div class="profile-header">
+          <div class="profile-icon" style="background:var(--blue-bg)">🇺🇦</div>
+          <div><div class="profile-name">Україна</div><div class="profile-sub">5 областей</div></div>
+        </div>
+        <ul class="profile-list">
+          <li>Дніпропетровська (Тернівська, Кам'янська)</li>
+          <li>Кіровоградська (Олександрійська)</li>
+          <li>Запорізька (Кушугумська, Михайло-Лукашівська)</li>
+          <li>Чернігівська (Добрянська)</li>
+          <li>Львівська (Львів, Великомостівська)</li>
+        </ul>
+      </div>
+      <div class="profile">
+        <div class="profile-header">
+          <div class="profile-icon" style="background:#eef0fb">🇪🇺</div>
+          <div><div class="profile-name">ЄС та інші</div><div class="profile-sub">7+ країн</div></div>
+        </div>
+        <ul class="profile-list">
+          <li>Австрія (Лінц)</li>
+          <li>Німеччина (Дрезден, Баварія, Нюрнберг)</li>
+          <li>Іспанія (Сантьяго де Компостела)</li>
+          <li>Ірландія, Польща, Словаччина</li>
+          <li>+ Непал, Кенія</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="banner banner-warn">
+      <div class="banner-icon">⚠️</div>
+      <div class="banner-body"><strong>Обмеження дослідження</strong>Зручна вибірка через мережі команди; малий розмір вибірки ОМС (3 громади) — результати ілюстративні. Воєнний контекст ускладнює пряме порівняння UA та EU. Активна молодь відповідала частіше — що може завищувати позитивні оцінки.</div>
+    </div>
+  </div>
+
+  <div class="lang-section" id="about-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Methodology · Sources</div>
+      <div class="sec-title">About the Research</div>
+      <div class="sec-desc">How data was collected, who was involved, and why this approach enables UA–EU comparison.</div>
+    </div>
+
+    <div class="sub-label">Purpose</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Why this research?</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        To examine the state of youth policy and youth work in small and medium-sized communities of Ukraine and the EU, identify shared challenges, and find entry points for peer-to-peer experience exchange. Findings inform the analytical brief and this digital toolkit.
+      </div>
+    </div>
+
+    <div class="sub-label">Methods and Sources</div>
+    <table class="tbl">
+      <tr><th>Source</th><th>Type</th><th>Coverage</th></tr>
+      <tr><td><strong>LSGB Survey (UA)</strong></td><td>Quantitative</td><td>3 communities: Ternivska, Oleksandriiska, Kushuhumska</td></tr>
+      <tr><td><strong>Youth & CSO Survey (UA)</strong></td><td>Quantitative</td><td>30+ respondents, 7 communities</td></tr>
+      <tr><td><strong>Youth Survey (EU)</strong></td><td>Quantitative</td><td>16 respondents, 7 countries</td></tr>
+      <tr><td><strong>In-depth interview (UA)</strong></td><td>Qualitative</td><td>Ternivska community, 2 youth center specialists</td></tr>
+      <tr><td><strong>Project documentation</strong></td><td>Contextual</td><td>SMART goals, action plan, indicators</td></tr>
+    </table>
+
+    <div class="banner banner-warn">
+      <div class="banner-icon">⚠️</div>
+      <div class="banner-body"><strong>Research Limitations</strong>Convenience sampling; small LSGB sample (3 communities) — results are illustrative, not statistically significant. Wartime context complicates direct UA–EU comparison. Active youth respondents may have inflated positive ratings.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ OMS ═══════════ -->
+<div class="section" id="tab-oms">
+  <div class="lang-section active" id="oms-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Рівень ОМС · Українські громади</div>
+      <div class="sec-title">Портрет громад</div>
+      <div class="sec-desc">Три громади — три різні контексти. Але спільні системні виклики.</div>
+    </div>
+
+    <div class="sub-label">Порівняльна таблиця</div>
+    <table class="tbl">
+      <tr><th>Параметр</th><th>🏙️ Тернівська</th><th>🏙️ Олександрійська</th><th>🏘️ Кушугумська</th></tr>
+      <tr><td><strong>Область</strong></td><td>Дніпропетровська</td><td>Кіровоградська</td><td>Запорізька</td></tr>
+      <tr><td><strong>Тип</strong></td><td>Міська</td><td>Міська</td><td>Селищна</td></tr>
+      <tr><td><strong>Чисельність</strong></td><td>10–30 тис.</td><td>50 тис.+</td><td>10–30 тис.</td></tr>
+      <tr><td><strong>Динаміка міграції</strong></td><td>Помірний відтік</td><td>Стабільна</td><td>Важко оцінити</td></tr>
+      <tr><td><strong>Фінансування молод. пол.</strong></td><td>Залишковий принцип</td><td>Стабільний рядок бюджету</td><td>Виключно гранти/донори</td></tr>
+      <tr><td><strong>Молодіжна програма</strong></td><td>✅ Чинна</td><td>✅ Чинна</td><td>❌ Відсутня</td></tr>
+      <tr><td><strong>Молодіжна рада</strong></td><td>✅ Активна (4+/рік)</td><td>⚠️ Формальна (0–3/рік)</td><td>✅ Активна (4+/рік)</td></tr>
+      <tr><td><strong>EU-партнерство</strong></td><td>❌ Немає</td><td>✅ 1–4 проєкти</td><td>❌ Немає</td></tr>
+      <tr><td><strong>Досвід грантів</strong></td><td>✅ Є</td><td>✅ Є</td><td>✅ Є</td></tr>
+    </table>
+
+    <div class="sub-label">Топ-3 проблеми молодіжної політики</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--red)">1</div><div class="flow-connector"></div></div>
+        <div class="flow-content">
+          <div class="flow-step-title">Безпекова ситуація</div>
+          <div class="flow-step-body">Обмежує офлайн-заходи, провокує відтік молоді. Особливо гостро — у прифронтових громадах. Повноцінні концерти, масові зустрічі, табори — під забороною.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--red)">2</div><div class="flow-connector"></div></div>
+        <div class="flow-content">
+          <div class="flow-step-title">Фінансування</div>
+          <div class="flow-step-body">Залишковий принцип або повна залежність від грантів. Пріоритети бюджету — військові потреби, ЖКГ, базові установи. Молодіжна робота — остання в черзі.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot" style="background:var(--red)">3</div></div>
+        <div class="flow-content">
+          <div class="flow-step-title">Брак інфраструктури та кадрів</div>
+          <div class="flow-step-body">Немає окремих приміщень, немає молодіжних працівників як окремої посади — суміщення з іншими відділами. Кваліфікованих фахівців бракує.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-label">Успішні кейси від ОМС</div>
+    <div class="case">
+      <div class="case-header">
+        <div><div class="case-num">Кейс ОМС #1</div><div class="case-title">Молодіжний центр + рада</div><div class="case-loc">📍 Тернівська громада 🇺🇦</div></div>
+        <div class="case-flag">🏛️</div>
+      </div>
+      <div class="case-meta"><span class="case-pill tag-oms">ОМС</span><span class="case-pill tag-youth">Молодь</span></div>
+      <div class="case-divider"></div>
+      <div class="case-what"><strong>Що зробили</strong>Створили молодіжний центр як окрему комунальну установу і відновили молодіжну раду — перший інституційний крок до системної роботи.</div>
+      <div class="case-what"><strong>Чому важливо</strong>Центр став єдиним місцем у громаді, де молодь може прийти просто так, без примусу. Психологічні практики, творчість, волонтерство — все за запитом молоді.</div>
+    </div>
+    <div class="case">
+      <div class="case-header">
+        <div><div class="case-num">Кейс ОМС #2</div><div class="case-title">Два молодіжних простори</div><div class="case-loc">📍 Олександрійська громада 🇺🇦</div></div>
+        <div class="case-flag">🏛️</div>
+      </div>
+      <div class="case-meta"><span class="case-pill tag-oms">ОМС</span><span class="case-pill" style="background:var(--green-bg);color:var(--green)">Інфраструктура</span></div>
+      <div class="case-divider"></div>
+      <div class="case-what"><strong>Що зробили</strong>Відкрили два комунальних молодіжних простори — в центрі і у віддаленому мікрорайоні — з введенням посад молодіжних працівників.</div>
+      <div class="case-what"><strong>Чому важливо</strong>Не один центральний простір — а два, для різних частин міста. Плюс окремі посади — молодіжна робота як фах, а не навантаження.</div>
+    </div>
+    <div class="case">
+      <div class="case-header">
+        <div><div class="case-num">Кейс ОМС #3</div><div class="case-title">Молодь — грантрайтери</div><div class="case-loc">📍 Кушугумська громада 🇺🇦</div></div>
+        <div class="case-flag">🏛️</div>
+      </div>
+      <div class="case-meta"><span class="case-pill tag-youth">Молодь</span><span class="case-pill tag-oms">ОМС</span><span class="case-pill" style="background:var(--amber-bg);color:#8a6200">Гранти</span></div>
+      <div class="case-divider"></div>
+      <div class="case-what"><strong>Що зробили</strong>Молодіжна рада навчилась писати грантові заявки і залучила зовнішнє фінансування для молодіжного простору в безпечному укритті.</div>
+      <div class="case-what"><strong>Чому важливо</strong>Не чекали на бюджет — взяли ініціативу. Простір у бомбосховищі — не обмеження, а рішення. Понад 50 відвідувачів щомісяця.</div>
+    </div>
+  </div>
+
+  <div class="lang-section" id="oms-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">LSGB Level · Ukrainian Communities</div>
+      <div class="sec-title">Community Profile</div>
+      <div class="sec-desc">Three communities — three different contexts. But shared systemic challenges.</div>
+    </div>
+
+    <table class="tbl">
+      <tr><th>Parameter</th><th>🏙️ Ternivska</th><th>🏙️ Oleksandriiska</th><th>🏘️ Kushuhumska</th></tr>
+      <tr><td><strong>Type</strong></td><td>Urban</td><td>Urban</td><td>Settlement</td></tr>
+      <tr><td><strong>Population</strong></td><td>10–30k</td><td>50k+</td><td>10–30k</td></tr>
+      <tr><td><strong>Migration trend</strong></td><td>Moderate outflow</td><td>Stable</td><td>Hard to assess</td></tr>
+      <tr><td><strong>Youth policy funding</strong></td><td>Residual principle</td><td>Stable budget line</td><td>Grants/donors only</td></tr>
+      <tr><td><strong>Youth programme</strong></td><td>✅ Active</td><td>✅ Active</td><td>❌ Absent</td></tr>
+      <tr><td><strong>Youth council</strong></td><td>✅ Active (4+/yr)</td><td>⚠️ Formal (0–3/yr)</td><td>✅ Active (4+/yr)</td></tr>
+      <tr><td><strong>EU partnership</strong></td><td>❌ None</td><td>✅ 1–4 projects</td><td>❌ None</td></tr>
+    </table>
+
+    <div class="sub-label" style="margin-top:24px">Top 3 Youth Policy Challenges</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>1 · Security situation</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Limits offline events and drives youth outflow. Especially acute in front-line communities — concerts, mass gatherings, camps are prohibited.</div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>2 · Funding</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Residual principle or full dependence on grants. Budget priorities — military needs, utilities, basic institutions. Youth work is last in line.</div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>3 · Infrastructure & staff shortage</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">No dedicated premises, no youth workers as a separate position — combined with other departments. Qualified specialists are scarce.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ YOUTH ═══════════ -->
+<div class="section" id="tab-youth">
+  <div class="lang-section active" id="youth-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Голос молоді · UA vs EU</div>
+      <div class="sec-title">Що каже молодь</div>
+      <div class="sec-desc">Порівняння шкальних оцінок, потреб та причин пасивності між молоддю України та ЄС.</div>
+    </div>
+
+    <div class="sub-label">Шкальні оцінки (1–5): UA vs EU</div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px">
+      <div style="display:flex;gap:16px;margin-bottom:16px;font-size:12px;font-weight:600">
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:2px;background:var(--ua);display:inline-block"></span>Україна</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:2px;background:var(--eu);display:inline-block"></span>ЄС</span>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Вплив молоді на рішення</div>
+        <div class="compare-bars">
+          <div class="bar-wrap"><div class="bar bar-ua" style="width:64%"></div></div>
+          <div class="bar-val" style="color:var(--ua)">3.2</div>
+          <div class="bar-wrap"><div class="bar bar-eu" style="width:56%"></div></div>
+          <div class="bar-val" style="color:var(--eu)">2.8</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Ефективність комунікації</div>
+        <div class="compare-bars">
+          <div class="bar-wrap"><div class="bar bar-ua" style="width:76%"></div></div>
+          <div class="bar-val" style="color:var(--ua)">3.8</div>
+          <div class="bar-wrap"><div class="bar bar-eu" style="width:54%"></div></div>
+          <div class="bar-val" style="color:var(--eu)">2.7</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Інформаційна політика (ясність)</div>
+        <div class="compare-bars">
+          <div class="bar-wrap"><div class="bar bar-ua" style="width:78%"></div></div>
+          <div class="bar-val" style="color:var(--ua)">3.9</div>
+          <div class="bar-wrap"><div class="bar bar-eu" style="width:58%"></div></div>
+          <div class="bar-val" style="color:var(--eu)">2.9</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Охоплення у соцмережах</div>
+        <div class="compare-bars">
+          <div class="bar-wrap"><div class="bar bar-ua" style="width:80%"></div></div>
+          <div class="bar-val" style="color:var(--ua)">4.0</div>
+          <div class="bar-wrap"><div class="bar bar-eu" style="width:56%"></div></div>
+          <div class="bar-val" style="color:var(--eu)">2.8</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="banner banner-tip">
+      <div class="banner-icon">💡</div>
+      <div class="banner-body"><strong>Інсайт</strong>Молодь України оцінює комунікацію з владою вище — можливо через вищу громадянську мобілізацію під час війни. Проте вплив на рішення залишається низьким в обох контекстах.</div>
+    </div>
+
+    <div class="sub-label">Топ-3 ключові потреби молоді</div>
+    <table class="tbl">
+      <tr><th>#</th><th>🇺🇦 Україна</th><th>🇪🇺 ЄС</th></tr>
+      <tr><td><strong>1</strong></td><td>Психологічна підтримка та розвантаження</td><td>Доступне житло</td></tr>
+      <tr><td><strong>2</strong></td><td>Простори для розвитку та дозвілля</td><td>Ментальне здоров'я та підтримка</td></tr>
+      <tr><td><strong>3</strong></td><td>Робочі місця та економічні можливості</td><td>Робочі місця та економічні можливості</td></tr>
+    </table>
+
+    <div class="sub-label">Причини пасивності молоді</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🇺🇦 Україна — топ причини</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <ul style="list-style:none;padding:0">
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Відсутність цікавих і сучасних форматів залучення</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Брак часу (навчання, робота, волонтерство)</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Зневіра у реальному впливі голосу молоді (імітація участі)</li>
+          <li style="padding:6px 0">→ Складна, забюрократизована комунікація з боку чиновників</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🇪🇺 ЄС — топ причини</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <ul style="list-style:none;padding:0">
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Брак часу (навчання, робота)</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Складна бюрократична комунікація</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Зневіра у реальному впливі</li>
+          <li style="padding:6px 0">→ Брак знань щодо взаємодії з владою</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="banner banner-success" style="margin-top:8px">
+      <div class="banner-icon">🔑</div>
+      <div class="banner-body"><strong>Спільний знаменник</strong>Недовіра до реального впливу та бюрократія — universal pain points незалежно від країни.</div>
+    </div>
+  </div>
+
+  <div class="lang-section" id="youth-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Youth Voice · UA vs EU</div>
+      <div class="sec-title">What Youth Say</div>
+    </div>
+
+    <div class="sub-label">Scale Ratings (1–5): UA vs EU</div>
+    <table class="tbl">
+      <tr><th>Dimension</th><th>🇺🇦 Average UA</th><th>🇪🇺 Average EU</th></tr>
+      <tr><td>Youth influence on decision-making</td><td><strong>3.2</strong></td><td><strong>2.8</strong></td></tr>
+      <tr><td>Effectiveness of communication</td><td><strong>3.8</strong></td><td><strong>2.7</strong></td></tr>
+      <tr><td>Information policy (clarity)</td><td><strong>3.9</strong></td><td><strong>2.9</strong></td></tr>
+      <tr><td>Social media outreach</td><td><strong>4.0</strong></td><td><strong>2.8</strong></td></tr>
+    </table>
+
+    <div class="sub-label">Top 3 Key Youth Needs</div>
+    <table class="tbl">
+      <tr><th>#</th><th>🇺🇦 Ukraine</th><th>🇪🇺 EU</th></tr>
+      <tr><td><strong>1</strong></td><td>Psychological support & relief</td><td>Affordable housing</td></tr>
+      <tr><td><strong>2</strong></td><td>Development & leisure spaces</td><td>Mental health & support</td></tr>
+      <tr><td><strong>3</strong></td><td>Jobs & economic opportunities</td><td>Jobs & economic opportunities</td></tr>
+    </table>
+
+    <div class="banner banner-success">
+      <div class="banner-icon">🔑</div>
+      <div class="banner-body"><strong>Common ground</strong>Distrust in real impact and bureaucracy are universal pain points regardless of country.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TERNIVSKA ═══════════ -->
+<div class="section" id="tab-ternivska">
+  <div class="lang-section active" id="ternivska-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Глибинне інтерв'ю · Якісний кейс</div>
+      <div class="sec-title">Тернівська громада</div>
+      <div class="sec-desc">~28 000 мешканців. Прифронтове містечко. Єдиний молодіжний центр — комунальна установа. Фахівці Карина та Анастасія.</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-n">28k</div><div class="stat-l">Мешканців</div></div>
+      <div class="stat"><div class="stat-n" style="color:var(--red)">⚠️</div><div class="stat-l">Прифронтова</div></div>
+      <div class="stat"><div class="stat-n">~⅓</div><div class="stat-l">Відвідувачів — ВПО</div></div>
+      <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Молоді щодня</div></div>
+    </div>
+
+    <div class="sub-label">Що працює ✅</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Спільна співпраця ОМС і молодіжного центру</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Екоакції, спортивні заходи, інклюзивні ініціативи реалізуються разом. Не «ОМС дало завдання», а «ми це робимо разом». Молодіжний центр — буфер між молоддю і владою.</div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Інтеграція ВПО через молодіжний центр</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Близько третини відвідувачів — внутрішньо переміщені особи. Центр стає місцем адаптації: спочатку закриті, потім — активні учасники. Соціалізація через творчість, не через формальні програми.</div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Відгук на запити молоді</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Психологічні практики, арт-терапія, тренінги з самопідтримки — не план від адміністрації, а відповідь на прохання молоді. Анонімні анкети після кожного заходу + збір зворотного зв'язку.</div>
+    </div>
+
+    <div class="sub-label">Що не працює ❌</div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Обмеження воєнного стану</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Відмови на великі заходи — концерти, дискотеки, масові події. Навіть якщо молодь ініціює і є готові ресурси. «Не на часі» — відповідь, яка демотивує.</div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Хиткий зв'язок з владою</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Голос молоді є, але «не завжди працює». Деякі ініціативи відкидаються без пояснень. Умова залишитись у громаді — якщо влада буде слухати.</div>
+    </div>
+
+    <div class="sub-label">Унікальний кейс: «Музика проти смерті»</div>
+    <div class="case">
+      <div class="case-header">
+        <div><div class="case-num">Кейс #3 · Тернівська</div><div class="case-title">«Музика проти смерті»</div><div class="case-loc">📍 Тернівська громада, Дніпропетровська область 🇺🇦</div></div>
+        <div class="case-flag">🎹</div>
+      </div>
+      <div class="case-meta"><span class="case-pill tag-youth">Молодь</span><span class="case-pill" style="background:var(--amber-bg);color:#8a6200">Без бюджету</span><span class="case-pill" style="background:var(--purple-bg);color:var(--purple)">Ініціатива знизу</span></div>
+      <div class="case-divider"></div>
+      <div class="case-what"><strong>Що зробили</strong>Молодь виносила музичні інструменти (фортепіано, піаніно) просто на вулиці міста. Люди підходили, грали. Збирали донати. Ділились практиками самопідтримки — як не поникнути.</div>
+      <div class="case-what"><strong>Чому важливо</strong>Ініціатива без бюджету, без дозволів, без адміністративного супроводу. Максимальний символічний ефект — «ми живемо, ми граємо, ми разом».</div>
+      <div class="case-what"><strong>Чому спрацювало</strong>Публічний простір + музика + збір на підтримку = три мотивації в одному заході. Проста формула, яку може відтворити будь-яка громада.</div>
+    </div>
+
+    <div class="quote">
+      <p>«Згуртованість. Коли в нас щось відбувається — ми не розбіглися по кутах, не стали злими. Ми допомагаємо один одному. Це механізм виживання суспільства.»</p>
+      <div class="quote-src">— Фахівець молодіжного центру, Тернівська громада (про те, що UA може дати EU)</div>
+    </div>
+  </div>
+
+  <div class="lang-section" id="ternivska-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">In-depth Interview · Qualitative Case</div>
+      <div class="sec-title">Ternivska Community</div>
+      <div class="sec-desc">~28,000 residents. A frontline town. One youth center — a municipal institution. Specialists Karyna and Anastasiia.</div>
+    </div>
+
+    <div class="case">
+      <div class="case-header">
+        <div><div class="case-num">Case #3 · Ternivska</div><div class="case-title">"Music Against Death"</div><div class="case-loc">📍 Ternivska, Dnipropetrovsk region 🇺🇦</div></div>
+        <div class="case-flag">🎹</div>
+      </div>
+      <div class="case-meta"><span class="case-pill tag-youth">Youth</span><span class="case-pill" style="background:var(--amber-bg);color:#8a6200">Zero budget</span><span class="case-pill" style="background:var(--purple-bg);color:var(--purple)">Grassroots</span></div>
+      <div class="case-divider"></div>
+      <div class="case-what"><strong>What they did</strong>Youth brought pianos onto city streets. People came, played, donated. Shared self-support practices — how not to despair.</div>
+      <div class="case-what"><strong>Why it matters</strong>No budget, no permits, no administrative support. Maximum symbolic effect — "we're alive, we play, we're together".</div>
+    </div>
+
+    <div class="quote">
+      <p>"Solidarity. When something happens — we didn't scatter to corners, we didn't become bitter. We help each other. It's society's survival mechanism."</p>
+      <div class="quote-src">— Youth center specialist, Ternivska community (on what UA can offer EU)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FINDINGS ═══════════ -->
+<div class="section" id="tab-findings">
+  <div class="lang-section active" id="findings-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Синтез · UA ↔ EU</div>
+      <div class="sec-title">Ключові висновки</div>
+      <div class="sec-desc">Де перетинаються UA та EU — і де розходяться. Що кожна сторона може дати іншій.</div>
+    </div>
+
+    <div class="sub-label">Спільні виклики (обидва контексти)</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🏛️</div><div class="card-title">Бюрократія</div><div class="card-desc">Складна комунікація між молоддю і владою — universal бар'єр незалежно від країни.</div><span class="card-tag tag-both">UA + EU</span></div>
+      <div class="card"><div class="card-icon">🗳️</div><div class="card-title">Недовіра до впливу</div><div class="card-desc">«Мій голос нічого не змінить» — відчуття, яке однаково демотивує молодь в Дрездені і Добрянці.</div><span class="card-tag tag-both">UA + EU</span></div>
+      <div class="card"><div class="card-icon">📱</div><div class="card-title">Застарілі формати</div><div class="card-desc">Брак цікавих, сучасних способів залучення — не тільки українська проблема.</div><span class="card-tag tag-both">UA + EU</span></div>
+      <div class="card"><div class="card-icon">🏠</div><div class="card-title">Брак просторів</div><div class="card-desc">Недостатньо якісних молодіжних просторів — в малих громадах і тут, і там.</div><span class="card-tag tag-both">UA + EU</span></div>
+    </div>
+
+    <div class="sub-label">Унікальні виклики</div>
+    <div class="profile-grid">
+      <div class="profile">
+        <div class="profile-header">
+          <div class="profile-icon" style="background:var(--blue-bg)">🇺🇦</div>
+          <div><div class="profile-name">Унікальні виклики UA</div></div>
+        </div>
+        <ul class="profile-list">
+          <li>Безпека як системний обмежувач</li>
+          <li>Масштаб ВПО-інтеграції</li>
+          <li>Фінансування за залишковим принципом</li>
+          <li>Постійний «перезапуск» спільнот через відтік</li>
+        </ul>
+      </div>
+      <div class="profile">
+        <div class="profile-header">
+          <div class="profile-icon" style="background:#eef0fb">🇪🇺</div>
+          <div><div class="profile-name">Унікальні виклики EU</div></div>
+        </div>
+        <ul class="profile-list">
+          <li>Житлова криза як бар'єр для молоді</li>
+          <li>Кліматична справедливість як пріоритет</li>
+          <li>Консервативні місцеві ради</li>
+          <li>Нижчий рівень громадянської мобілізації</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-label">Взаємний обмін</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🇺🇦 → 🇪🇺 Що Україна може дати Європі</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <ul style="list-style:none;padding:0">
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Досвід кризової стійкості та адаптації</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Культура горизонтальної взаємодії та волонтерства</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Peer-to-peer навчання в умовах обмежених ресурсів</li>
+          <li style="padding:6px 0">→ Приклад малої громади як суб'єкта міжнародної політики</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🇪🇺 → 🇺🇦 Що Європа може дати Україні</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <ul style="list-style:none;padding:0">
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Механізми реальної участі молоді (бюджет участі, молодіжні парламенти)</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Фінансові інструменти: Erasmus+, Корпус Солідарності ЄС</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border)">→ Досвід сталої інституційної молодіжної роботи</li>
+          <li style="padding:6px 0">→ Міжнародні мережі для малих громад</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lang-section" id="findings-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Synthesis · UA ↔ EU</div>
+      <div class="sec-title">Key Findings</div>
+    </div>
+
+    <div class="sub-label">Mutual Exchange</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🇺🇦 → 🇪🇺 What Ukraine Can Offer Europe</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Crisis resilience experience · volunteer culture · peer-to-peer learning under limited resources · example of small community as international policy actor</div>
+    </div>
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>🇪🇺 → 🇺🇦 What Europe Can Offer Ukraine</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">Mechanisms for real youth participation · Erasmus+ and Solidarity Corps funding · sustainable institutional youth work experience · international networks for small communities</div>
+    </div>
+
+    <div class="banner banner-success" style="margin-top:8px">
+      <div class="banner-icon">🔁</div>
+      <div class="banner-body"><strong>Reverse exchange is the core innovation</strong>Traditionally Europe teaches Ukraine. YouthLink proposes mutual enrichment — not just borrowing.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ RECS ═══════════ -->
+<div class="section" id="tab-recs">
+  <div class="lang-section active" id="recs-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Рекомендації · Майбутнє проєкту</div>
+      <div class="sec-title">Що далі</div>
+      <div class="sec-desc">Рекомендації для ОМС, молодіжних організацій і майбутніх EU–UA обмінів. Плюс — наступні кроки YouthLink.</div>
+    </div>
+
+    <div class="sub-label">Для ОМС малих і середніх громад України</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot">1</div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-step-title">Програмне фінансування</div><div class="flow-step-body">Виділити окремий рядок у місцевому бюджеті. Не залежати виключно від грантів — молодіжна робота потребує стабільного фінансування.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot">2</div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-step-title">Окрема посада молодіжного працівника</div><div class="flow-step-body">Не суміщення з іншими відділами. Молодіжна робота — окрема спеціалізація з реальним мандатом.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot">3</div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-step-title">Реальний вплив молодіжної ради</div><div class="flow-step-body">Не формальні засідання для галочки — а реальний механізм, де рішення молоді мають юридичну вагу.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot">4</div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-step-title">Горизонтальна співпраця</div><div class="flow-step-body">Peer-to-peer між ОМС — обмін практиками без посередників. Мала громада може вчитись у малої громади.</div></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-line"><div class="flow-dot">5</div></div>
+        <div class="flow-content"><div class="flow-step-title">ВПО-інтеграція через молодіжні центри</div><div class="flow-step-body">Системно, а не ситуативно. Молодіжний центр — природний простір адаптації для переміщених.</div></div>
+      </div>
+    </div>
+
+    <div class="sub-label">Для молодіжних організацій</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">📦</div><div class="card-title">Пакуй практики</div><div class="card-desc">Документуй успішні кейси у форматі, придатному для передачі. Твій досвід — ресурс для інших громад.</div><span class="card-tag tag-youth">Молодь</span></div>
+      <div class="card"><div class="card-icon">📋</div><div class="card-title">Грантовий менеджмент</div><div class="card-desc">Опанувати написання грантів — стратегічний інструмент незалежно від місцевого бюджету.</div><span class="card-tag tag-youth">Молодь</span></div>
+      <div class="card"><div class="card-icon">🌐</div><div class="card-title">Горизонтальні мережі</div><div class="card-desc">Прямий peer-to-peer контакт з молодіжними організаціями ЄС. Без посередників.</div><span class="card-tag tag-both">UA + EU</span></div>
+    </div>
+
+    <div class="sub-label">🚀 Наступні кроки YouthLink</div>
+    <table class="tbl">
+      <tr><th>Крок</th><th>Зміст</th><th>Партнери</th></tr>
+      <tr><td><strong>Масштабування</strong></td><td>10–15 громад UA + 5–7 EU</td><td>CEMR, CoR, Erasmus+</td></tr>
+      <tr><td><strong>Гібридні воркшопи</strong></td><td>Онлайн + офлайн формат</td><td>Erasmus+ KA2, EU Solidarity Corps</td></tr>
+      <tr><td><strong>Платформа</strong></td><td>Notion toolkit → повноцінна peer-to-peer платформа для ОМС</td><td>DG EAC, DG REGIO</td></tr>
+      <tr><td><strong>Policy Brief</strong></td><td>Рекомендації → Мінмолодьспорту + EU структури</td><td>Мінмолодьспорту, CoE</td></tr>
+      <tr><td><strong>Сталі партнерства</strong></td><td>Угоди між конкретними громадами UA та EU</td><td>CEMR</td></tr>
+    </table>
+  </div>
+
+  <div class="lang-section" id="recs-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Recommendations · Project Future</div>
+      <div class="sec-title">What's Next</div>
+    </div>
+
+    <div class="sub-label">For LSGBs of Small & Medium Ukrainian Communities</div>
+    <div class="accordion open">
+      <div class="acc-head" onclick="toggleAcc(this)"><span>5 key recommendations</span><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <ol style="padding-left:16px;line-height:2">
+          <li>Shift to programmatic youth policy funding — dedicated budget line</li>
+          <li>Introduce dedicated youth worker positions — separate specialization</li>
+          <li>Ensure real (not formal) influence of youth councils on decisions</li>
+          <li>Develop horizontal LSGB–LSGB cooperation for practice sharing</li>
+          <li>Use youth centers as IDP integration platforms — systematically</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="sub-label" style="margin-top:24px">🚀 YouthLink Next Steps</div>
+    <table class="tbl">
+      <tr><th>Step</th><th>Content</th><th>Partners</th></tr>
+      <tr><td><strong>Scale up</strong></td><td>10–15 UA + 5–7 EU communities</td><td>CEMR, CoR, Erasmus+</td></tr>
+      <tr><td><strong>Hybrid workshops</strong></td><td>Online + offline format</td><td>Erasmus+ KA2</td></tr>
+      <tr><td><strong>Platform</strong></td><td>Notion toolkit → full peer-to-peer LSGB platform</td><td>DG EAC, DG REGIO</td></tr>
+      <tr><td><strong>Policy Brief</strong></td><td>Recommendations → Ministry of Youth + EU structures</td><td>Ministry, CoE</td></tr>
+      <tr><td><strong>Partnerships</strong></td><td>Formal agreements between UA and EU communities</td><td>CEMR</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════ TEAM ═══════════ -->
+<div class="section" id="tab-team">
+  <div class="lang-section active" id="team-ua">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Команда проєкту</div>
+      <div class="sec-title">Хто це зробив</div>
+      <div class="sec-desc">Bridge EU–UA Lab · YouthLink · 2026</div>
+    </div>
+
+    <table class="tbl">
+      <tr><th>Учасник/ця</th><th>Роль у проєкті</th></tr>
+      <tr><td><strong>Катерина</strong></td><td>Координація (проєктний менеджмент), пошук партнерів UA та EU, модерація заходів</td></tr>
+      <tr><td><strong>Анастасія</strong></td><td>Пошук партнерів в Україні та за кордоном, соціальні мережі</td></tr>
+      <tr><td><strong>Анна</strong></td><td>Пошук партнерів за кордоном, переклад, соціальні мережі</td></tr>
+      <tr><td><strong>Валерія</strong></td><td>Пошук партнерів за кордоном, аналіз даних та анкет, digital toolkit (Notion)</td></tr>
+      <tr><td><strong>Денис</strong></td><td>Пошук партнерів в Україні, переклад, digital toolkit (Notion)</td></tr>
+      <tr><td><strong>Максим</strong></td><td>Аналіз даних та анкет, аналітична довідка</td></tr>
+      <tr><td><strong>Роман</strong></td><td>Аналіз даних та анкет, аналітична довідка, digital toolkit (Notion)</td></tr>
+      <tr><td><strong>Софія Возниця</strong></td><td>Організація заходів, дизайн-супровід</td></tr>
+      <tr><td><strong>Софія Кулька</strong></td><td>Організація заходів, аналіз даних та анкет, digital toolkit (Notion)</td></tr>
+    </table>
+
+    <div style="text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)">
+      YouthLink · Bridge EU–UA Lab · Аналітична сторінка дослідження<br>
+      Підготовлено командою проєкту · Відень, 22 травня 2026<br><br>
+      🇺🇦 Periphery is not a border — it is a point of connection 🇪🇺
+    </div>
+  </div>
+
+  <div class="lang-section" id="team-en">
+    <div class="sec-header">
+      <div class="sec-eyebrow">Project Team</div>
+      <div class="sec-title">Who Made This</div>
+      <div class="sec-desc">Bridge EU–UA Lab · YouthLink · 2026</div>
+    </div>
+
+    <table class="tbl">
+      <tr><th>Team member</th><th>Role</th></tr>
+      <tr><td><strong>Kateryna</strong></td><td>Project management & coordination, partner outreach (UA & EU), event moderation</td></tr>
+      <tr><td><strong>Anastasiia</strong></td><td>Partner outreach (UA & EU), social media</td></tr>
+      <tr><td><strong>Anna</strong></td><td>Partner outreach (EU), translation, social media</td></tr>
+      <tr><td><strong>Valeriia</strong></td><td>Partner outreach (EU), survey design & data analysis, digital toolkit (Notion)</td></tr>
+      <tr><td><strong>Denys</strong></td><td>Partner outreach (UA), translation, digital toolkit (Notion)</td></tr>
+      <tr><td><strong>Maksym</strong></td><td>Data analysis, analytical report</td></tr>
+      <tr><td><strong>Roman</strong></td><td>Data analysis, analytical report, digital toolkit (Notion)</td></tr>
+      <tr><td><strong>Sofiia Voznysia</strong></td><td>Event organization, design</td></tr>
+      <tr><td><strong>Sofiia Kulka</strong></td><td>Event organization, data analysis, digital toolkit (Notion)</td></tr>
+    </table>
+
+    <div style="text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)">
+      YouthLink · Bridge EU–UA Lab · Research Report<br>
+      Prepared by the project team · Vienna, 22 May 2026<br><br>
+      🇺🇦 Periphery is not a border — it is a point of connection 🇪🇺
+    </div>
+  </div>
+</div>
+
+<script>
+let currentLang = 'ua';
+
+function showTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  const tabs=['summary','about','oms','youth','ternivska','findings','recs','team'];
+  const idx=tabs.indexOf(id);
+  if(idx>=0) document.querySelectorAll('.nav-tab')[idx].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function toggleLang(){
+  currentLang = currentLang === 'ua' ? 'en' : 'ua';
+  document.querySelectorAll('.lang-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('[id$="-'+currentLang+'"]').forEach(s => s.classList.add('active'));
+  document.getElementById('lang-btn').textContent = currentLang === 'ua' ? 'УКР / ENG' : 'ENG / УКР';
+}
+
+function toggleAcc(head){
+  const acc=head.parentElement;
+  acc.classList.toggle('open');
+}
+</script>
+</body>
+</html>
